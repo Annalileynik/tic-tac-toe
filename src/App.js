@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import {useState} from "react";
+import Board from "./components/Board";
 
 function App() {
+
+  const [game, setGame]=useState(Array(9).fill(null))
+const [symbol, setSymbol]=useState('X')
+    const move = (value, index) => {
+        if (value === null) {
+            const newGame = game.map((elem, i) =>
+                (i === index) ? symbol : elem)
+            setSymbol((symbol === "X") ? "0" : "X")
+            setGame(newGame)
+        }
+    }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1> Tic tac toe </h1>
+        <div>
+            <Board game={game}
+                   move={move}/>
+        </div>
     </div>
   );
 }
