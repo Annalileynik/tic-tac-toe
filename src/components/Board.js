@@ -1,15 +1,17 @@
-import Square from "../Square";
+import React from "react";
+import Square from "./Square";
 
-const Board = (props) => {
+const Board = ({board, handleMove}) => {
     return(
-        <div className="board">
-            {props.game.map((elem,index)=>
+        <div className='board'>
+            {board.map((el, index)=>
             <Square
-                key={index}
-                index={index}
-            value={elem}
-            move={props.move}
-            />)}
+            key={index}
+            el={el}
+            index={index}
+            handleMove={handleMove}
+            />
+                )}
         </div>
     )
 }

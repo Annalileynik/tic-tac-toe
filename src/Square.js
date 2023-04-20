@@ -1,10 +1,12 @@
+import React from "react";
+
 const Square = (props) => {
-    return (
+    return(
         <button
-            onClick={()=>props.move(props.value, props.index)}
+            onClick={()=>props.openPlace(props.el, props.index)}
             className="square">
-            {props.value}
+            {props.el}
         </button>
     )
 }
-export default Square
+export default Square;
