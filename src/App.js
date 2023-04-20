@@ -7,6 +7,7 @@ const App = () => {
     const [board, setBoard] = useState(Array(9).fill(null))
     const [gamerX, setGamerX] = useState(true)
     const [winner, setWinner] = useState(null)
+    const[score, setScore]=useState({'X':0, "0":0})
     const handleMove = (el, index) => {
         if (el === null) {
             const gamer = gamerX ? "X" : "0"
@@ -30,10 +31,30 @@ const App = () => {
         for (let i = 0; i < setWinning.length; i++) {
             const [a, b, c] = setWinning[i]
             if (board[a] && board[a] === board[b] && board[b] === board[c]) {
-                setWinner(`Congratulation ${board[a]} won!`)
+                setWinner(board[a])
+                if (board[a] === 'X') {
+                    const newScore = {...score, 'X': score['X'] + 1}
+                    setScore(newScore)
+                } else {
+                    const newScore = {...score, '0': score['0'] + 1}
+                    setScore(newScore)
+                }
             }
         }
+    };
+    const restart = () => {
+        setBoard(board.map(el=>null))
+        setWinner(null)
+        setGamerX('X')
     }
+    useEffect(() => {
+        if (winner !== null) {
+            setTimeout(() => {
+                restart()
+            }, 2000)
+        }
+    },[winner])
+
     useEffect(() => {
         calculateWinning()
     }, [board])
@@ -43,7 +64,9 @@ const App = () => {
             <Board board={board}
                    handleMove={handleMove}
             />
-            <h3 style={{textAlign:"center", color:"red"}}> {winner}</h3>
+            {winner && <h3>Congratulation, {winner} has won! </h3>}
+            <div> X:{score['X']} </div>
+            <div> 0:{score['0']}</div>
         </div>
     )
 }
